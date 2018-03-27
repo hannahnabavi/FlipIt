@@ -1,6 +1,10 @@
 var sceneMap = {
 }
 
+var appState = {
+  options : {},
+  gameState : {}
+};
 
 var canvasSize = {width : 500, height: 500};
 
