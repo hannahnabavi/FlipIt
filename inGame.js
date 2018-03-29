@@ -1,15 +1,12 @@
 
 var inGame= {};
-var cardsPerRow =5;
+var cardsPerRow = 5;
 var spacing=10;
 
 inGame.firstFrame=true;
 
 inGame.setup=function(){
 deck =makeDeck(numberOfCards);
-fill("blue");
-ellipse(100,100,100,100);
-console.log("in setup!");
 }
 
 inGame.screenText = "Scene: inGame!"; //do this so that it is not global when you want each one has its own screen text
@@ -23,10 +20,9 @@ inGame.mousePressed= function (){
 
 inGame.draw = function (){
      background("darkred");
-    textAlign(CENTER);
-    textSize(30);
-    text(inGame.screenText, width/2, height/2);
-
+    //textAlign(CENTER);
+    //textSize(30);
+    //text(inGame.screenText, width/2, height/2);
     drawDeck(deck,cardsPerRow);
     makeLable(mouseX, mouseY);
    checkMatch({id:1,face:0,faceUp:true, matched: true, invisible: false},
