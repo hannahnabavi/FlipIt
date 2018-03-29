@@ -1,4 +1,5 @@
 var sceneMap = {
+  "inGame" : inGame
 }
 
 var mode = "dev"
