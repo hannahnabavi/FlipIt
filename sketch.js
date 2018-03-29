@@ -1,6 +1,8 @@
 var sceneMap = {
 }
 
+var mode = "dev"
+
 var appState = {
   options : {},
   gameState : {}
@@ -10,7 +12,10 @@ var canvasSize = {width : 500, height: 500};
 
 function setup() {
   createCanvas(canvasSize.width, canvasSize.height);
-  appState.currentScene = "menuScreen";
+  appState.currentScene = "startScreen";
+  if (mode === "dev"){
+    devState(appState);
+  }
 }
 
 function draw() {
