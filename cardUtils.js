@@ -38,8 +38,8 @@ function cardLayout(i, cardsPerRow, spacing){
      var row  = floor(i/cardsPerRow);
      var col = i % cardsPerRow; 
      
-     x = col * cardProperties.with + spacing + col * spacing
-     y = cardProperties.height * row + row * spacing;
+     x = col * appState.options.theme.cards.dimensions.width + spacing.horizontal + col * spacing.horizontal
+     y = appState.options.theme.cards.dimensions.height * row + spacing.vertical + row * spacing.vertical;
 
     return {x: x, y: y};
 }
