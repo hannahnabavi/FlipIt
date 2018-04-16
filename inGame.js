@@ -83,7 +83,7 @@ inGame.mousePressed = function(){
   clickToIndex(mouseX, mouseY, appState.options.theme.layout.cardsPerRow, appState.options.theme.cards.dimensions, appState.options.numberOfCards, appState.gameState.deck, appState.options.theme.layout.spacing);
   findMatch();
 
-  //appState.currentScene = 'inGame2';
+  appState.currentScene = 'inGame2';
 }
 
 inGame.keyPressed = function(){
