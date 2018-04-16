@@ -18,7 +18,11 @@ inGame2.draw = function(){
 }
 
 inGame2.mousePressed = function(){
+    clickToFlip(mouseX, mouseY, appState.options.theme.layout.cardsPerRow, appState.options.theme.cards.dimensions, appState.options.numberOfCards, appState.gameState.deck, appState.options.theme.layout.spacing);
+    clickToIndex(mouseX, mouseY, appState.options.theme.layout.cardsPerRow, appState.options.theme.cards.dimensions, appState.options.numberOfCards, appState.gameState.deck, appState.options.theme.layout.spacing);
+    findMatch();
     appState.currentScene = 'inGame';
+    
 }
 
 inGame2.keyPressed = function(){
