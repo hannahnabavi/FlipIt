@@ -65,17 +65,19 @@ getCords = function(mouseX, mouseY, cardsPerRow, cardSize, spacing, deckSize){
 }
 
 findMatch = function(){
-  if(matching.length === 2){
-    if(matching[0].face === matching[1].face && matching[0].id != matching[1].id){
-      console.log(matching);
+  var firstCard = matching[matching.length-2];
+  var secondCard = matching[matching.length-1];
+    if(firstCard.face === secondCard.face && firstCard.id != secondCard.id){
+      //console.log(matching);
       console.log('matched!');
-
-      //set two cards matched to true
-      matching = [];
+      firstCard.matched = true;
+      secondCard.matched = true;
+      appState.matching.matchCount++;
+      console.log('matchCount:' + appState.matching.matchCount);
     }else{
-      matching = [];
+     
     }
-  }
+  console.log(matching);
 }
 
 inGame.mousePressed = function(){
