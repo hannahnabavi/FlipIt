@@ -4,10 +4,12 @@ var sceneMap = {
 }
 
 var mode = "dev"
+var matchCount = 0;
 
 var appState = {
   options : {},
-  gameState : {}
+  gameState : {},
+  matching: {matchCount}
 };
 
 var canvasSize = {width : 500, height: 500};
