@@ -1,7 +1,10 @@
+var matching = [];
 
 findMatch = function(){
-    var firstCard = matching[matching.length-2];
-    var secondCard = matching[matching.length-1];
+  //the problem is that I am only setting the card in matching array but not in the array that is actually drawn to the board. 
+  //use clickToIndex to get the index and change the card in the actuall array.
+    var firstCard = matching[matching.length-2].card;
+    var secondCard = matching[matching.length-1].card;
       if(firstCard.face === secondCard.face && firstCard.id != secondCard.id){
         //console.log(matching);
         console.log('matched!');
@@ -18,5 +21,5 @@ findMatch = function(){
         matching = [];
       }
     console.log(matching);
-  }
+}
   

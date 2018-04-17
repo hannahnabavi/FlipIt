@@ -2,8 +2,6 @@ var inGame = {}
 var cardsPerRow;
 var cardSize;
 
-var matching = [];
-
 inGame.firstFrame = true;
 
 inGame.screenText = 'Scene: inGame!'
@@ -42,7 +40,7 @@ clickToFlip = function(mouseX, mouseY, cardsPerRow, cardSize, deckSize, cardArra
 clickToIndex = function(mouseX, mouseY, cardsPerRow, cardSize, deckSize, cardArray, spacing){
   var cords = getCords(mouseX, mouseY, cardsPerRow, cardSize, spacing, deckSize);
   var index = cords[0] + cardsPerRow*cords[1];
-  matching.push(cardArray[index]);
+  matching.push({card: cardArray[index], index: index});
   return index;
 }
 
@@ -65,11 +63,10 @@ getCords = function(mouseX, mouseY, cardsPerRow, cardSize, spacing, deckSize){
 }
 
 inGame.mousePressed = function(){
+  appState.currentScene = 'inGame2';
   clickToFlip(mouseX, mouseY, appState.options.theme.layout.cardsPerRow, appState.options.theme.cards.dimensions, appState.options.numberOfCards, appState.gameState.deck, appState.options.theme.layout.spacing);
   clickToIndex(mouseX, mouseY, appState.options.theme.layout.cardsPerRow, appState.options.theme.cards.dimensions, appState.options.numberOfCards, appState.gameState.deck, appState.options.theme.layout.spacing);
   findMatch();
-
-  appState.currentScene = 'inGame2';
 }
 
 inGame.keyPressed = function(){
