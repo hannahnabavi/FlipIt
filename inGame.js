@@ -49,7 +49,7 @@ clickToIndex = function(mouseX, mouseY, cardsPerRow, cardSize, deckSize, cardArr
 
 getCords = function(mouseX, mouseY, cardsPerRow, cardSize, spacing, deckSize){
   var cords = [];
-  console.log(arguments)
+  //console.log(arguments)
   for(var i = 0; i < cardsPerRow; i++){
     if(cardSize.width * i + spacing.horizontal + spacing.horizontal * i < mouseX && mouseX < cardSize.width * i + cardSize.width + spacing.horizontal + spacing.horizontal * i){
       cords.push(i);
@@ -60,24 +60,8 @@ getCords = function(mouseX, mouseY, cardsPerRow, cardSize, spacing, deckSize){
       cords.push(j);
     }
   }
-  console.log(cords);
+  //console.log(cords);
   return cords;
-}
-
-findMatch = function(){
-  var firstCard = matching[matching.length-2];
-  var secondCard = matching[matching.length-1];
-    if(firstCard.face === secondCard.face && firstCard.id != secondCard.id){
-      //console.log(matching);
-      console.log('matched!');
-      firstCard.matched = true;
-      secondCard.matched = true;
-      appState.matching.matchCount++;
-      console.log('matchCount:' + appState.matching.matchCount);
-    }else{
-     
-    }
-  console.log(matching);
 }
 
 inGame.mousePressed = function(){
