@@ -12,8 +12,11 @@ inGame2.draw = function(){
     background('pink');
     textAlign(CENTER);
     textSize(40);
-    text(inGame2.screenText, width/2, 50);
+    //text(inGame2.screenText, width/2, 50);
     pop();
+
+    text('total trial:'+' '+ toatlTrial,400,50);
+
     drawDeck(appState.gameState.deck, 0, 0, cardLayout, appState.options.theme.layout.cardsPerRow, appState.options.theme.layout.spacing);  
 }
 

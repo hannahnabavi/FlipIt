@@ -19,8 +19,10 @@ inGame.draw = function(){
   background('darkorange')
   textAlign(CENTER);
   textSize(60);
-  text(inGame. screenText, width/2, height/2);
+  //text(inGame. screenText, width/2, height/2);
   pop();
+
+  text('total trial:'+' '+ toatlTrial,400,50);
 
   //drawLable(mouseX, mouseY);
 

@@ -10,8 +10,8 @@ function makeCard(id, face, faceUp, matched) {
 function makeDeck(numberOfCards) {
   var result = [];
   for (var id = 0, face = 0; id < numberOfCards; face++) {
-    result.push(makeCard(id++, face, true));
-    result.push(makeCard(id++, face, true));
+    result.push(makeCard(id++, face, false));
+    result.push(makeCard(id++, face, false));
   }
   return result;
 }
