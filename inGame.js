@@ -2,8 +2,6 @@ var inGame = {}
 var cardsPerRow;
 var cardSize;
 
-var matching = [];
-
 inGame.firstFrame = true;
 
 inGame.screenText = 'Scene: inGame!'
@@ -18,11 +16,13 @@ inGame.setup = function(){
 
 inGame.draw = function(){
   push();
-  background('darkorange')
+  background('darkorange');
   textAlign(CENTER);
   textSize(60);
-  text(inGame. screenText, width/2, height/2);
+  //text(inGame. screenText, width/2, height/2);
   pop();
+
+  text('total trial:'+' '+ toatlTrial,400,50);
 
   //drawLable(mouseX, mouseY);
 
@@ -32,24 +32,29 @@ inGame.draw = function(){
 clickToFlip = function(mouseX, mouseY, cardsPerRow, cardSize, deckSize, cardArray, spacing){
   var cords = getCords(mouseX, mouseY, cardsPerRow, cardSize, spacing, deckSize);
   var index = cords[0] + cardsPerRow*cords[1];
-  if(cardArray[index].faceUp){
-    cardArray[index].faceUp = false;
+  if(cardArray[index].matched === false){
+    if(cardArray[index].faceUp){
+      cardArray[index].faceUp = false;
+    }else{
+      cardArray[index].faceUp = true;
+    }
+  
   }else{
-    cardArray[index].faceUp = true;
-  }
+
+  }  
 }
 
 clickToIndex = function(mouseX, mouseY, cardsPerRow, cardSize, deckSize, cardArray, spacing){
   var cords = getCords(mouseX, mouseY, cardsPerRow, cardSize, spacing, deckSize);
   var index = cords[0] + cardsPerRow*cords[1];
-  matching.push(cardArray[index]);
+  matching.push({card: cardArray[index], index: index});
   return index;
 }
 
 
 getCords = function(mouseX, mouseY, cardsPerRow, cardSize, spacing, deckSize){
   var cords = [];
-  console.log(arguments)
+  //console.log(arguments)
   for(var i = 0; i < cardsPerRow; i++){
     if(cardSize.width * i + spacing.horizontal + spacing.horizontal * i < mouseX && mouseX < cardSize.width * i + cardSize.width + spacing.horizontal + spacing.horizontal * i){
       cords.push(i);
@@ -60,30 +65,14 @@ getCords = function(mouseX, mouseY, cardsPerRow, cardSize, spacing, deckSize){
       cords.push(j);
     }
   }
-  console.log(cords);
   return cords;
 }
 
-findMatch = function(){
-  if(matching.length === 2){
-    if(matching[0].face === matching[1].face && matching[0].id != matching[1].id){
-      console.log(matching);
-      console.log('matched!');
-
-      //set two cards matched to true
-      matching = [];
-    }else{
-      matching = [];
-    }
-  }
-}
-
 inGame.mousePressed = function(){
+  appState.currentScene = 'inGame2';
   clickToFlip(mouseX, mouseY, appState.options.theme.layout.cardsPerRow, appState.options.theme.cards.dimensions, appState.options.numberOfCards, appState.gameState.deck, appState.options.theme.layout.spacing);
   clickToIndex(mouseX, mouseY, appState.options.theme.layout.cardsPerRow, appState.options.theme.cards.dimensions, appState.options.numberOfCards, appState.gameState.deck, appState.options.theme.layout.spacing);
   findMatch();
-
-  //appState.currentScene = 'inGame2';
 }
 
 inGame.keyPressed = function(){
