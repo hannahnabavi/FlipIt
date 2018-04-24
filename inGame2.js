@@ -9,7 +9,7 @@ inGame2.setup = function(){
 
 inGame2.draw = function(){
     push();
-    background('pink');
+    background('darkorange');
     textAlign(CENTER);
     textSize(40);
     //text(inGame2.screenText, width/2, 50);

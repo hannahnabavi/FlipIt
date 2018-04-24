@@ -16,7 +16,7 @@ inGame.setup = function(){
 
 inGame.draw = function(){
   push();
-  background('darkorange')
+  background('darkorange');
   textAlign(CENTER);
   textSize(60);
   //text(inGame. screenText, width/2, height/2);
@@ -32,11 +32,16 @@ inGame.draw = function(){
 clickToFlip = function(mouseX, mouseY, cardsPerRow, cardSize, deckSize, cardArray, spacing){
   var cords = getCords(mouseX, mouseY, cardsPerRow, cardSize, spacing, deckSize);
   var index = cords[0] + cardsPerRow*cords[1];
-  if(cardArray[index].faceUp){
-    cardArray[index].faceUp = false;
+  if(cardArray[index].matched === false){
+    if(cardArray[index].faceUp){
+      cardArray[index].faceUp = false;
+    }else{
+      cardArray[index].faceUp = true;
+    }
+  
   }else{
-    cardArray[index].faceUp = true;
-  }
+
+  }  
 }
 
 clickToIndex = function(mouseX, mouseY, cardsPerRow, cardSize, deckSize, cardArray, spacing){
@@ -60,7 +65,6 @@ getCords = function(mouseX, mouseY, cardsPerRow, cardSize, spacing, deckSize){
       cords.push(j);
     }
   }
-  //console.log(cords);
   return cords;
 }
 
