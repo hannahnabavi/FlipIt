@@ -1,7 +1,8 @@
 var sceneMap = {
   "inGame" : inGame,
   "inGame2": inGame2,
-  "finishScreen": finishScreen
+  "finishScreen": finishScreen,
+  "threedcard" : threedcard
 }
 
 var mode = "dev"
@@ -16,7 +17,7 @@ var appState = {
 var canvasSize = {width : 500, height: 500};
 
 function setup() {
-  createCanvas(canvasSize.width, canvasSize.height);
+  createCanvas(canvasSize.width, canvasSize.height, WEBGL);
   appState.currentScene = "startScreen";
   if (mode === "dev"){
     devState(appState);

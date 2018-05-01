@@ -8,7 +8,7 @@
 // Make sure you set `mode = "dev"` in sketch.js. If mode is not set to "dev", the game will start up on the start screen. 
 
 function devState(state){
-    state.currentScene = "inGame";
+    state.currentScene = "threedcard";
     state.options.numberOfCards = 16;
     state.options.theme = {
         cards: {
