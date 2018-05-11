@@ -16,9 +16,9 @@ function makeDeck(numberOfCards) {
   return result;
 }
 
-function drawCard(card, x, y, z, cardWidth, cardHeight, cardStroke){
+function drawCard(card, x, y, cardWidth, cardHeight, cardStroke){
     push();
-    translate(x, y, z);
+    translate(x, y);
     if (card.faceUp){
         stroke(cardStroke);
         rect(0,0,cardWidth, cardHeight, 8);
