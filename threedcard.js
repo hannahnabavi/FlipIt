@@ -3,12 +3,21 @@ var threedcard = {};
 threedcard.firstFrame = true;
 threedcard.faces = [];
 threedcard.ZTABLE = 20;
+
 var democard = makeCard(0, 0, false, false);
+
 threedcard.setup = function(){
     ortho(-width / 2, width / 2, -height / 2, height / 2, 0, 1450);
     democard.rot = 0;
 
-    appState.gameState.deck = threedcard.makeDeck(8);    
+    threedcard.colorBuffer = createGraphics(500, 500, WEBGL);
+    threedcard.colorBuffer.show();
+    threedcard.colorBuffer.style("display", "inline");
+    threedcard.colorBuffer.background("lightBlue");
+    threedcard.colorBuffer.ortho(-width / 2, width / 2, -height / 2,  height / 2, 0, 1450);
+
+
+    appState.gameState.deck = threedcard.makeDeck(16);    
    shuffle(appState.gameState.deck, true);
 
     threedcard.cardBack = threedcard.loadBack(threedcard.debugTheme); 
@@ -17,59 +26,63 @@ threedcard.setup = function(){
 
 threedcard.draw = function(){
    
-    orbitControl();
+  orbitControl();
   var hover = false;
   background("lightgrey");
 
-  push();
-  translate(-width/2 + appState.options.theme.cards.dimensions.width/2, 
-            -height/2 + appState.options.theme.cards.dimensions.height/2,
-             0);
-  //var loc = map(mouseX, 0, width, 0, PI);
+//   push();
+//   translate(-width/2 + appState.options.theme.cards.dimensions.width/2, 
+//             -height/2 + appState.options.theme.cards.dimensions.height/2,
+//              0);
 
-  push();
-  fill("blue");
-  box(10,10,10);
-  pop();
+//   push();
+//   fill("blue");
+//   box(10,10,10);
+//   pop();
 
-  rotateY(democard.rot);
+//   rotateY(democard.rot);
   
-  //front face
-  push();
-  translate(0, 0, -.015);
-  stroke(3);
-  rotateY(PI);
-  texture(threedcard.faces[4]);
-  plane(appState.options.theme.cards.dimensions.width,appState.options.theme.cards.dimensions.height);
-  pop();
+//   //front face
+//   push();
+//   translate(0, 0, -.015);
+//   stroke(3);
+//   rotateY(PI);
+//   texture(threedcard.faces[4]);
+//   plane(appState.options.theme.cards.dimensions.width,appState.options.theme.cards.dimensions.height);
+//   pop();
 
-  //back face
-  push();
-  translate(0, 0, .015);
-  texture(threedcard.cardBack);
-  plane(appState.options.theme.cards.dimensions.width,appState.options.theme.cards.dimensions.height);
-  pop();
+//   //back face
+//   push();
+//   translate(0, 0, .015);
+//   texture(threedcard.cardBack);
+//   plane(appState.options.theme.cards.dimensions.width,appState.options.theme.cards.dimensions.height);
+//   pop();
 
-  pop();
+//   pop();
 
   
   
 //   threedcard.drawCard(4, 20, 20, 0, PI, 75, 100, threedcard.cardBack, threedcard.faces);
 //   threedcard.drawCard(1, 95, 20, 0, PI/4, 75, 100, threedcard.cardBack, threedcard.faces);
 //   threedcard.drawCard(2, 170, 20, 0, PI/3, 75, 100, threedcard.cardBack, threedcard.faces);
-//   threedcard.drawCard(3, 245, 20, 0, PI/2, 75, 100, threedcard.cardBack, threedcard.faces);
+   //threedcard.drawCardColorBuffer(3, 245, 20, 0, PI/2, 75, 100, threedcard.cardBack, threedcard.faces, threedcard.colorBuffer, "red");
 
   threedcard.drawDeck(appState.gameState.deck, -200, -200, cardLayout, 4, {horizontal: 10, vertical: 15});
 };
 
 threedcard.drawDeck = function (arrOfCards, x, y, cardLayout, cardsPerRow, spacing){
+    threedcard.colorBuffer.push();
     push();
     translate(x, y, threedcard.ZTABLE); 
+    threedcard.colorBuffer.translate(x, y, threedcard.ZTABLE);
+
     arrOfCards.forEach(function(card, index){
         var loc = cardLayout(index, cardsPerRow, spacing);
         threedcard.drawCard(card.face, loc.x, loc.y, threedcard.ZTABLE, PI, cardProperties.width, cardProperties.height, threedcard.cardBack, threedcard.faces);
+        threedcard.drawCardColorBuffer(card.face, loc.x, loc.y, threedcard.ZTABLE, PI, cardProperties.width, cardProperties.height, threedcard.cardBack, threedcard.faces, threedcard.colorBuffer, card.col);
     });
     pop();
+    threedcard.colorBuffer.pop();
 }
 
 threedcard.mousePressed = function(){
@@ -81,11 +94,12 @@ threedcard.mousePressed = function(){
         }
 };
 
-threedcard.makeCard = function (id, face, faceUp, matched, rot) {
+threedcard.makeCard = function (id, face, faceUp, matched, rot, col) {
         faceUp = faceUp ? faceUp : false;
         matched = matched ? matched : false;
         rot = rot ? rot : 0;
-        return { id: id, face: face, faceUp: faceUp, matched: matched, rot: rot};
+        col = col ? col : 255 - (id * 5); 
+        return { id: id, face: face, faceUp: faceUp, matched: matched, rot: rot, col: col};
 };
 
 threedcard.makeDeck = function makeDeck(numberOfCards) {
@@ -98,7 +112,7 @@ threedcard.makeDeck = function makeDeck(numberOfCards) {
   }
 
 
-threedcard.drawCard = function(face,x, y, z, rot, cardWidth, cardHeight, cardBack, cardFaces){
+threedcard.drawCard = function(face, x, y, z, rot, cardWidth, cardHeight, cardBack, cardFaces){
     push();
     translate(x,y,z);
     rotateY(rot);
@@ -118,6 +132,31 @@ threedcard.drawCard = function(face,x, y, z, rot, cardWidth, cardHeight, cardBac
     pop();
 
     pop();
+}
+
+threedcard.drawCardColorBuffer = function (face, x, y, z, rot, cardWidth, cardHeight, cardBack, cardFaces, gc, col){
+    gc.push();
+    // gc.translate(x,y,z);
+    gc.translate(x, y, -20)
+    gc.rotateY(rot);
+
+    gc.push();
+    gc.translate(0, 0, -.015);
+    gc.stroke(3);
+    gc.rotateY(PI);
+    // gc.texture(cardFaces[face]);
+    gc.fill([col, 0, 0]);
+    gc.plane(cardWidth,cardHeight);
+    gc.pop();
+
+    gc.push();
+    gc.translate(0, 0, .015);
+    // gc.texture(cardBack);
+    gc.fill([col, 0, 0]);
+    gc.plane(cardWidth,cardHeight);
+    gc.pop();
+
+    gc.pop();
 }
 
 threedcard.loadFaces = function (theme, numberOfCards){
@@ -171,4 +210,42 @@ threedcard.debugTheme =
     }
 }
 
-
+/* This function loads the pixels of the color buffer canvas into an array 
+		called pixels and returns them. */
+        function getPixels() {
+            var gl = threedcard.colorBuffer.elt.getContext('webgl');
+            var pixels = new Uint8Array(gl.drawingBufferWidth * gl.drawingBufferHeight * 4);
+            gl.readPixels(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+            return (pixels);
+        }
+/* This function gets the red channel of the pixel under the mouse as 
+		the index for the corresponding object. A more advanced version 
+		 could use the 4 bytes (see commented section) */
+        function getObject(mx, my) {
+            if (mx > width || my > height) {
+                return 0;
+            }
+        
+            var gl = threedcard.colorBuffer.elt.getContext('webgl');
+            var pix = getPixels();
+        
+            var index = 4 * ((gl.drawingBufferHeight-my) * gl.drawingBufferWidth + mx);
+        
+            // var cor = color(
+            // 	pix[index + 0],
+            // 	pix[index + 1],
+            // 	pix[index + 2],
+            // 	pix[index + 3]);
+            // return cor;
+        
+            var col = pix[index]; // Only returning the red channel as the object index.
+            var found = appState.gameState.deck.find(function(element){
+            return element.col === col;
+            })
+            return found;
+        }
+        
+threedcard.mousePressed = function (){
+    var card = getObject(mouseX, mouseY);
+    console.log(card);
+}
