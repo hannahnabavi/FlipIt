@@ -27,45 +27,7 @@ threedcard.setup = function(){
 threedcard.draw = function(){
    
   orbitControl();
-  var hover = false;
   background("lightgrey");
-
-//   push();
-//   translate(-width/2 + appState.options.theme.cards.dimensions.width/2, 
-//             -height/2 + appState.options.theme.cards.dimensions.height/2,
-//              0);
-
-//   push();
-//   fill("blue");
-//   box(10,10,10);
-//   pop();
-
-//   rotateY(democard.rot);
-  
-//   //front face
-//   push();
-//   translate(0, 0, -.015);
-//   stroke(3);
-//   rotateY(PI);
-//   texture(threedcard.faces[4]);
-//   plane(appState.options.theme.cards.dimensions.width,appState.options.theme.cards.dimensions.height);
-//   pop();
-
-//   //back face
-//   push();
-//   translate(0, 0, .015);
-//   texture(threedcard.cardBack);
-//   plane(appState.options.theme.cards.dimensions.width,appState.options.theme.cards.dimensions.height);
-//   pop();
-
-//   pop();
-
-  
-  
-//   threedcard.drawCard(4, 20, 20, 0, PI, 75, 100, threedcard.cardBack, threedcard.faces);
-//   threedcard.drawCard(1, 95, 20, 0, PI/4, 75, 100, threedcard.cardBack, threedcard.faces);
-//   threedcard.drawCard(2, 170, 20, 0, PI/3, 75, 100, threedcard.cardBack, threedcard.faces);
-   //threedcard.drawCardColorBuffer(3, 245, 20, 0, PI/2, 75, 100, threedcard.cardBack, threedcard.faces, threedcard.colorBuffer, "red");
 
   threedcard.drawDeck(appState.gameState.deck, -200, -200, cardLayout, 4, {horizontal: 10, vertical: 15});
 };
@@ -78,8 +40,8 @@ threedcard.drawDeck = function (arrOfCards, x, y, cardLayout, cardsPerRow, spaci
 
     arrOfCards.forEach(function(card, index){
         var loc = cardLayout(index, cardsPerRow, spacing);
-        threedcard.drawCard(card.face, loc.x, loc.y, threedcard.ZTABLE, PI, cardProperties.width, cardProperties.height, threedcard.cardBack, threedcard.faces);
-        threedcard.drawCardColorBuffer(card.face, loc.x, loc.y, threedcard.ZTABLE, PI, cardProperties.width, cardProperties.height, threedcard.cardBack, threedcard.faces, threedcard.colorBuffer, card.col);
+        threedcard.drawCard(card.face, loc.x, loc.y, threedcard.ZTABLE, card.rot, cardProperties.width, cardProperties.height, threedcard.cardBack, threedcard.faces);
+        threedcard.drawCardColorBuffer(card.face, loc.x, loc.y, threedcard.ZTABLE, card.rot, cardProperties.width, cardProperties.height, threedcard.cardBack, threedcard.faces, threedcard.colorBuffer, card.col);
     });
     pop();
     threedcard.colorBuffer.pop();
@@ -95,9 +57,9 @@ threedcard.mousePressed = function(){
 };
 
 threedcard.makeCard = function (id, face, faceUp, matched, rot, col) {
-        faceUp = faceUp ? faceUp : false;
+        faceUp = faceUp ? ((rot = PI) && true) : ((rot = 0) || false);
         matched = matched ? matched : false;
-        rot = rot ? rot : 0;
+        rot = rot !== 0 ? PI : 0;
         col = col ? col : 255 - (id * 5); 
         return { id: id, face: face, faceUp: faceUp, matched: matched, rot: rot, col: col};
 };
@@ -194,7 +156,7 @@ threedcard.debugTheme =
         
         for (var r = 0; r < 6; r++){
             for (var c = 0; c < 6; c++){
-                ((r + c) % 2 === 0) ? cardback.fill("red") : cardback.fill("green")
+                ((r + c) % 2 === 0) ? cardback.fill("lightgreen") : cardback.fill("white")
                 cardback.noStroke();
                 cardback.rect(r * cardback.width/6, c * cardback.height/6,
                 cardback.width/6, cardback.height/6);
@@ -231,13 +193,6 @@ threedcard.debugTheme =
         
             var index = 4 * ((gl.drawingBufferHeight-my) * gl.drawingBufferWidth + mx);
         
-            // var cor = color(
-            // 	pix[index + 0],
-            // 	pix[index + 1],
-            // 	pix[index + 2],
-            // 	pix[index + 3]);
-            // return cor;
-        
             var col = pix[index]; // Only returning the red channel as the object index.
             var found = appState.gameState.deck.find(function(element){
             return element.col === col;
@@ -248,4 +203,8 @@ threedcard.debugTheme =
 threedcard.mousePressed = function (){
     var card = getObject(mouseX, mouseY);
     console.log(card);
+    if(card){
+    toObj = card.faceUp ? {rot: 0, faceUp: false} : {rot: PI, faceUp: true};
+    createjs.Tween.get(card).to(toObj, 500);
+    }
 }
