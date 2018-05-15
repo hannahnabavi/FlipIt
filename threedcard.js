@@ -11,13 +11,14 @@ threedcard.setup = function(){
     democard.rot = 0;
 
     threedcard.colorBuffer = createGraphics(500, 500, WEBGL);
+    threedcard.colorBuffer.pixelDensity(1);
     threedcard.colorBuffer.show();
     threedcard.colorBuffer.style("display", "inline");
     threedcard.colorBuffer.background("lightBlue");
     threedcard.colorBuffer.ortho(-width / 2, width / 2, -height / 2,  height / 2, 0, 1450);
 
 
-    appState.gameState.deck = threedcard.makeDeck(16);    
+    appState.gameState.deck = threedcard.makeDeck(appState.options.numberOfCards);    
    shuffle(appState.gameState.deck, true);
 
     threedcard.cardBack = threedcard.loadBack(threedcard.debugTheme); 
@@ -26,13 +27,13 @@ threedcard.setup = function(){
 
 threedcard.draw = function(){
    
-  orbitControl();
+//   orbitControl();
   background("lightgrey");
 
-  threedcard.drawDeck(appState.gameState.deck, -200, -200, cardLayout, 4, {horizontal: 10, vertical: 15});
+  threedcard.drawDeck(appState.gameState.deck, -200, -200, appState.options.theme.cards.dimensions, cardLayout, 4, {horizontal: 10, vertical: 15});
 };
 
-threedcard.drawDeck = function (arrOfCards, x, y, cardLayout, cardsPerRow, spacing){
+threedcard.drawDeck = function (arrOfCards, x, y, cardProperties, cardLayout, cardsPerRow, spacing){
     threedcard.colorBuffer.push();
     push();
     translate(x, y, threedcard.ZTABLE); 
@@ -205,6 +206,6 @@ threedcard.mousePressed = function (){
     console.log(card);
     if(card){
     toObj = card.faceUp ? {rot: 0, faceUp: false} : {rot: PI, faceUp: true};
-    createjs.Tween.get(card).to(toObj, 500);
+    createjs.Tween.get(card, {override: true}).to(toObj, 300);
     }
 }

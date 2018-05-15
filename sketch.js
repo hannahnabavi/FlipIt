@@ -18,6 +18,7 @@ var canvasSize = {width : 500, height: 500};
 
 function setup() {
   createCanvas(canvasSize.width, canvasSize.height, WEBGL);
+  pixelDensity(1);
   appState.currentScene = "startScreen";
   if (mode === "dev"){
     devState(appState);
