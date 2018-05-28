@@ -10,7 +10,7 @@ threedcard.setup = function(){
     ortho(-width / 2, width / 2, -height / 2, height / 2, 0, 1450);
     democard.rot = 0;
 
-    threedcard.colorBuffer = createGraphics(500, 500, WEBGL);
+    threedcard.colorBuffer = createGraphics(width, height, WEBGL);
     threedcard.colorBuffer.pixelDensity(1);
     threedcard.colorBuffer.show();
     threedcard.colorBuffer.style("display", "inline");
@@ -27,7 +27,7 @@ threedcard.setup = function(){
 
 threedcard.draw = function(){
    
-//   orbitControl();
+  orbitControl();
   background("lightgrey");
 
   threedcard.drawDeck(appState.gameState.deck, -200, -200, appState.options.theme.cards.dimensions, cardLayout, 4, {horizontal: 10, vertical: 15});
