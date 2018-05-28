@@ -16,6 +16,15 @@ var appState = {
 
 var canvasSize = {width : 500, height: 500};
 
+function preload(){
+    var scenes = Object.getOwnPropertyNames(sceneMap);
+    scenes.forEach(function (scene){
+        if (Object.getOwnPropertyNames(sceneMap[scene]).find(function(prop) {return prop == "preload" && (typeof scene[prop]) == "function"})){
+            sceneMap[scene].preload();
+        }
+    })
+}
+
 function setup() {
   createCanvas(canvasSize.width, canvasSize.height, WEBGL);
   pixelDensity(1);
@@ -24,7 +33,7 @@ function setup() {
     devState(appState);
   }
 }
-
+ 
 function draw() {
  if(sceneMap[appState.currentScene].firstFrame){
    sceneMap[appState.currentScene].setup(appState);
