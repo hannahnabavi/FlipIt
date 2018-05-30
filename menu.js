@@ -13,7 +13,7 @@ var appstate = {
 function setup() {
   createCanvas(800, 600, WEBGL);
   menuItems = makeMenuItems();
-  selectCurrentSettings(menuItems, appstate.options.);
+  selectCurrentSettings(menuItems, appState.options);
   drawMenuTextures(menuItems);
   
   colorGC = createGraphics(width, height, WEBGL);
@@ -190,7 +190,7 @@ function setOthersToDeslect(selectedItem){
   selectedItem.selected = true;
 }
         
-mousePressed = function (){
+startScreen.mousePressed = function (){
     var card = getObject(mouseX, mouseY);
    
     if (card){
