@@ -4,7 +4,6 @@ var sceneMap = {
   "finishScreen": finishScreen,
   "newthreedcard" : newthreedcard,
   "startScreen" : startScreen,
-    "startMenu" : startMenu
 };
 
 var themeMap = {
