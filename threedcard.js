@@ -18,10 +18,10 @@ threedcard.setup = function(){
     threedcard.colorBuffer.ortho(-width / 2, width / 2, -height / 2,  height / 2, 0, 1450);
 
 
-    appState.gameState.deck = threedcard.makeDeck(appState.options.numberOfCards);    
+    appState.gameState.deck = threedcard.makeDeck(appState.options.numberOfCards);
    shuffle(appState.gameState.deck, true);
 
-    threedcard.cardBack = threedcard.loadBack(threedcard.debugTheme); 
+    threedcard.cardBack = threedcard.loadBack(threedcard.debugTheme);
     threedcard.faces = threedcard.loadFaces(threedcard.debugTheme,appState.options.numberOfCards)  
 };
 
@@ -53,7 +53,7 @@ threedcard.mousePressed = function(){
         mouseY > 0 && appState.options.theme.cards.dimensions.height > mouseY) {
             createjs.Tween.get(democard, {onComplete: function(card){
                 card.faceUp = true;
-            }}).to({rot: PI}, 300, createjs.Ease.linear)
+            }}).to({rot: PI}, 300, createjs.Ease.linear);
         }
 };
 
@@ -99,8 +99,8 @@ threedcard.drawCard = function(face, x, y, z, rot, cardWidth, cardHeight, cardBa
 
 threedcard.drawCardColorBuffer = function (face, x, y, z, rot, cardWidth, cardHeight, cardBack, cardFaces, gc, col){
     gc.push();
-    // gc.translate(x,y,z);
-    gc.translate(x, y, -20)
+    gc.translate(x,y,z);
+    // gc.translate(x, y, -20)
     gc.rotateY(rot);
 
     gc.push();

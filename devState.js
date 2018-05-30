@@ -8,13 +8,50 @@
 // Make sure you set `mode = "dev"` in sketch.js. If mode is not set to "dev", the game will start up on the start screen. 
 
 function devState(state){
-    state.currentScene = "threedcard";
+    state.currentScene = "newthreedcard";
+    state.options.themeName = "debugTheme";
     state.options.numberOfCards = 16;
     state.options.theme = {
         cards: {
-            dimensions: {
-                width: 75,
-                height: 100
+        drawFaces: function (numberOfCards){
+        faces = []
+
+        for (var i = 0; i < numberOfCards/2; i++){
+            faces[i] = createGraphics(threedcard.debugTheme.cards.dimensions.width, 
+                                    threedcard.debugTheme.cards.dimensions.height);
+            faces[i].background("white");
+            faces[i].fill("black");
+            faces[i].textSize(72);
+            faces[i].textAlign(CENTER);
+            faces[i].text(i, threedcard.debugTheme.cards.dimensions.width/2, threedcard.debugTheme.cards.dimensions.height * .75);
+            faces[i].noFill();
+            faces[i].stroke(5);
+            faces[i].rect(0,0,threedcard.debugTheme.cards.dimensions.width - .5, threedcard.debugTheme.cards.dimensions.height - .5);
+        }
+
+        return faces;
+        },
+        drawBack: function(theme){
+        var cardback = createGraphics(theme.cards.dimensions.width, 
+            theme.cards.dimensions.height);
+        
+        for (var r = 0; r < 6; r++){
+            for (var c = 0; c < 6; c++){
+                ((r + c) % 2 === 0) ? cardback.fill("lightgreen") : cardback.fill("white")
+                cardback.noStroke();
+                cardback.rect(r * cardback.width/6, c * cardback.height/6,
+                cardback.width/6, cardback.height/6);
+                cardback.noFill();
+                cardback.stroke(5);
+                cardback.rect(0,0, cardback.width - .5, cardback.height - .5);
+            }
+        }
+
+        return cardback;
+      },
+      dimensions: {
+         width: 75,
+         height: 100
             }
         },
         layout: {
