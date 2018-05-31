@@ -2,18 +2,17 @@
 //and get mousePressed button to work
 //and get the cards to flip in the background (i was thinking translucent cards)
 var startScreen = {};
-startScreen.firstFrame = true;
-
-
-
-startScreen.preload = function(){
-    console.log("blahhhhhh");
-    appState.fonts.curvedSquare = loadFont("resources/curvedSquare.ttf");
-}
+startScreen.firstFrame =true;
+var myFont;
+var mySong;
 
 
 
 startScreen.setup=function(){
+  //  mySong.setVolume(2);
+   mySong.play();
+   
+   
     title={
         w:593,
         h: 100
@@ -59,6 +58,11 @@ startScreen.setup=function(){
         h:30
     }
 
+    bottomRightC={
+        w:30,
+        h:30
+    }
+
  f= createGraphics(75,100);
  f.background(159, 168, 218 );
  //loadF();
@@ -94,6 +98,9 @@ loadBottomLeftCube();
 
 e=createGraphics(topRightC.w,topRightC.h);
 loadTopRightCube();
+
+v=createGraphics(bottomRightC.w,bottomRightC.h);
+loadBottomRightCube();
 
 
  planeOne={
@@ -293,7 +300,7 @@ function loadTitle(){ //the title screen
     h.push();
     h.background(250, 243, 253);
      h.textAlign(CENTER);
-     h.textFont(appState.fonts.curvedSquare);
+     h.textFont(myFont);
     h.fill("black");
      h.stroke(250, 243, 253 );
      h.strokeWeight(15);
@@ -306,7 +313,8 @@ function loadTitle(){ //the title screen
 function loadPlayButton(){ //play button
     j.push();
     j.textAlign(CENTER);
-    j.textFont(appState.fonts.curvedSquare);
+    j.textFont(myFont);
+    j.background(250, 243, 253);
   j.textSize(60);
   j.stroke("black");
   j.fill(232, 218, 239);
@@ -360,7 +368,7 @@ function loadBottomBorder(){ //bottom border
     p.fill(159, 168, 218 ); //purple
     p.rect(10,5,570,5);
     p.fill("black");
-    p.rect(15,0,560,5);
+    p.rect(15,0,563,5);
     p.pop();
 }
 
@@ -432,6 +440,25 @@ function loadTopRightCube(){
    e.rect(21,0,5,30);
    e.rect(0,0,25,5);
     e.pop();
+}
+
+
+function loadBottomRightCube(){
+v.push();
+v.background(250, 243, 253);
+v.noStroke();
+v.fill(159, 168, 218); //purple
+v.rect(0,0,12,10);
+v.fill(102, 102, 204); //dark blue
+v.rect(5,0,5,15);
+v.rect(0,10,10,5);
+v.fill(209, 242, 235); //torquise
+v.rect(10,0,5,15);
+v.rect(0,15,15,5);
+v.fill("black");
+v.rect(15,0,5,20);
+v.rect(0,20,20,5);
+v.pop();
 }
 
 startScreen.draw =function(){
@@ -527,4 +554,20 @@ startScreen.draw =function(){
     texture(e);
     plane(topRightC.w,topRightC.h);
     pop();
+
+    push(); //bottom right cube
+    translate(292,390);
+    texture(v);
+    plane(bottomRightC.w,bottomRightC.h);
+    pop();
+    
+
+}
+
+startScreen.mousePressed=function(){
+    if(mouseX>216 && mouseX<381 && mouseY>514 && mouseY<566){
+appState.currentScene="menuScreen";
+    }
+  
+
 }

@@ -26,6 +26,8 @@ var appState = {
 var canvasSize = {width : 600, height: 800};
 
 function preload(){
+  mySong=loadSound("music.mp3");
+  myFont=loadFont("curvedSquare.ttf");
     var scenes = Object.getOwnPropertyNames(sceneMap);
     console.log(scenes);
     scenes.forEach(function (scene){
